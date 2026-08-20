@@ -389,6 +389,7 @@ https://github.com/user-attachments/assets/d2306066-2b70-489e-ae67-e56073206a1c
 Battle vs Player:
 
 [![Watch on YouTube](https://img.youtube.com/vi/gc6cSDInFuk/hqdefault.jpg)](https://youtu.be/gc6cSDInFuk)
+[![Watch on YouTube](https://i.ytimg.com/vi/I72jZX48Kqo/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLCysDKdapWW5IWHSjmybRsobJg-sw)](https://youtu.be/c-hsJQTt6PI)
 
 *(click the image to open the video on YouTube — GitHub doesn't allow
 embedding the player directly in the README)*
