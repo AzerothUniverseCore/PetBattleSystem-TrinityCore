@@ -321,6 +321,19 @@ function PetBattleUI:OnServerMessage(msg)
 
 
     -- ========================================================
+    -- TEXTE DE DEGATS/SOIN FLOTTANT
+    -- ========================================================
+
+    elseif cmd == "DMGTEXT" then
+
+        PetBattleUI_Battle_ShowDamageText(
+            p[2],
+            tonumber(p[3]),
+            p[4]
+        )
+
+
+    -- ========================================================
     -- TURNO
     -- ========================================================
 

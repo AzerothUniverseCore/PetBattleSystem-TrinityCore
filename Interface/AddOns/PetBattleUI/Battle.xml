@@ -118,6 +118,39 @@
 
             </FontString>
 
+
+            <!-- Texte de degats/soin flottant, gere entierement  -->
+            <!-- en Lua (PetBattleUI_Battle_ShowDamageText). Cache -->
+            <!-- par defaut, ne s'affiche qu'au moment d'un coup.  -->
+
+            <FontString
+              name="PetBattleUI_EnemyDamageText"
+              inherits="GameFontNormalHuge"
+              justifyH="CENTER"
+              hidden="true"
+              text=""
+            >
+
+              <Anchors>
+                <Anchor point="BOTTOM" relativeTo="PetBattleUI_EnemyHealthBar" relativePoint="TOP" x="0" y="-41"/>
+              </Anchors>
+
+            </FontString>
+
+            <FontString
+              name="PetBattleUI_MyDamageText"
+              inherits="GameFontNormalHuge"
+              justifyH="CENTER"
+              hidden="true"
+              text=""
+            >
+
+              <Anchors>
+                <Anchor point="BOTTOM" relativeTo="PetBattleUI_MyHealthBar" relativePoint="TOP" x="0" y="-41"/>
+              </Anchors>
+
+            </FontString>
+
           </Layer>
 
         </Layers>

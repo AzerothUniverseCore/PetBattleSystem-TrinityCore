@@ -232,6 +232,190 @@ fightNotifTimerFrame:SetScript(
 
 
 -- ============================================================
+-- TEXTE DE DEGATS/SOIN FLOTTANT (au-dessus des barres de vie)
+-- ============================================================
+-- Meme technique de minuteur maison (OnUpdate) que la notification
+-- "C'est parti !" ci-dessus, faute de C_Timer sur ce client 3.3.5a.
+-- Chaque cote (mine/enemy) a son propre etat pour pouvoir s'animer
+-- independamment l'un de l'autre.
+
+local DMG_TEXT_DURATION =
+    5
+
+local DMG_TEXT_RISE_PIXELS =
+    30
+
+local dmgTextState = {
+
+    mine = {
+        timeLeft = 0,
+        baseY = -41
+    },
+
+    enemy = {
+        timeLeft = 0,
+        baseY = -41
+    }
+
+}
+
+local DMG_TEXT_COLORS = {
+
+    hit = { 1.0, 0.15, 0.15 },
+    crit = { 1.0, 0.65, 0.0 },
+    heal = { 0.2, 1.0, 0.3 },
+    miss = { 0.8, 0.8, 0.8 }
+
+}
+
+
+function PetBattleUI_Battle_ShowDamageText(
+    side,
+    amount,
+    dmgType
+)
+
+    local fontString =
+        (side == "mine")
+        and PetBattleUI_MyDamageText
+        or PetBattleUI_EnemyDamageText
+
+    local state =
+        dmgTextState[side]
+
+    if not fontString or not state then
+        return
+    end
+
+
+    -- ========================================================
+    -- TEXTE
+    -- ========================================================
+
+    local text
+
+    if dmgType == "miss" then
+
+        text =
+            (PetBattleUI_Locale and PetBattleUI_Locale.MISS_TEXT)
+            or "Miss!"
+
+    elseif dmgType == "heal" then
+
+        text =
+            "+" .. tostring(amount or 0)
+
+    else
+
+        text =
+            "-" .. tostring(amount or 0)
+
+    end
+
+
+    -- ========================================================
+    -- COULEUR
+    -- ========================================================
+
+    local color =
+        DMG_TEXT_COLORS[dmgType]
+        or DMG_TEXT_COLORS.hit
+
+    fontString:SetTextColor(
+        color[1],
+        color[2],
+        color[3]
+    )
+
+
+    -- ========================================================
+    -- AFFICHAGE (position de depart)
+    -- ========================================================
+
+    fontString:SetText(text)
+    fontString:SetAlpha(1)
+
+    fontString:ClearAllPoints()
+
+    fontString:SetPoint(
+        "BOTTOM",
+        (side == "mine")
+            and PetBattleUI_MyHealthBar
+            or PetBattleUI_EnemyHealthBar,
+        "TOP",
+        0,
+        state.baseY
+    )
+
+    fontString:Show()
+
+    state.timeLeft =
+        DMG_TEXT_DURATION
+
+end
+
+
+local dmgTextTimerFrame =
+    CreateFrame("Frame")
+
+
+dmgTextTimerFrame:SetScript(
+    "OnUpdate",
+    function(self, elapsed)
+
+        for side, state in pairs(dmgTextState) do
+
+            if state.timeLeft > 0 then
+
+                state.timeLeft =
+                    state.timeLeft - elapsed
+
+                local fontString =
+                    (side == "mine")
+                    and PetBattleUI_MyDamageText
+                    or PetBattleUI_EnemyDamageText
+
+                if fontString then
+
+                    if state.timeLeft <= 0 then
+
+                        state.timeLeft = 0
+                        fontString:Hide()
+
+                    else
+
+                        local progress =
+                            1 - (state.timeLeft / DMG_TEXT_DURATION)
+
+                        fontString:SetAlpha(
+                            state.timeLeft / DMG_TEXT_DURATION
+                        )
+
+                        fontString:ClearAllPoints()
+
+                        fontString:SetPoint(
+                            "BOTTOM",
+                            (side == "mine")
+                                and PetBattleUI_MyHealthBar
+                                or PetBattleUI_EnemyHealthBar,
+                            "TOP",
+                            0,
+                            state.baseY + (progress * DMG_TEXT_RISE_PIXELS)
+                        )
+
+                    end
+
+                end
+
+            end
+
+        end
+
+    end
+)
+
+
+-- ============================================================
 -- TEXTURAS
 -- ============================================================
 
@@ -1743,6 +1927,22 @@ function PetBattleUI_Battle_End(
 
     PetBattleUI_Battle.isPlayerTurn =
         false
+
+
+    -- ========================================================
+    -- TEXTE DE DEGATS FLOTTANT : NE PAS LAISSER TRAINER
+    -- ========================================================
+
+    dmgTextState.mine.timeLeft = 0
+    dmgTextState.enemy.timeLeft = 0
+
+    if PetBattleUI_MyDamageText then
+        PetBattleUI_MyDamageText:Hide()
+    end
+
+    if PetBattleUI_EnemyDamageText then
+        PetBattleUI_EnemyDamageText:Hide()
+    end
 
 
     -- ========================================================

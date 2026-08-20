@@ -53,6 +53,9 @@ elseif locale == "enUS" or locale == "enGB" then
     PetBattleUI_Locale.DUEL_BUTTON =
         "Pet Duel"
 
+    PetBattleUI_Locale.MISS_TEXT =
+        "Miss!"
+
 
 -- ============================================================
 -- FRANCÉS
@@ -83,6 +86,9 @@ elseif locale == "frFR" then
 
     PetBattleUI_Locale.DUEL_BUTTON =
         "Duel de Mascotte"
+
+    PetBattleUI_Locale.MISS_TEXT =
+        "Raté !"
 
 
 -- ============================================================
@@ -194,5 +200,8 @@ else
 
     PetBattleUI_Locale.DUEL_BUTTON =
         "Pet Duel"
+
+    PetBattleUI_Locale.MISS_TEXT =
+        "Miss!"
 
 end
