@@ -204,7 +204,9 @@
 
             <Scripts>
               <OnValueChanged>
-                PetBattleUI_EnemyHealthBar_UpdateFill(this)
+                if PetBattleUI_EnemyHealthBar_UpdateFill then
+                  PetBattleUI_EnemyHealthBar_UpdateFill(this)
+                end
               </OnValueChanged>
             </Scripts>
 

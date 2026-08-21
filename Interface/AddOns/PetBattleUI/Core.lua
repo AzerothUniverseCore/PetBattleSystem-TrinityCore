@@ -724,15 +724,11 @@ eventFrame:SetScript(
 
         if event == "PLAYER_LOGIN" then
 
-            RegisterAddonMessagePrefix(
-                ADDON_PREFIX
-            )
-
-
-            PetBattleUI_RestorePosition(
-                PetBattleUI_BattleFrame
-            )
-
+            if RegisterAddonMessagePrefix then
+                RegisterAddonMessagePrefix(
+                    ADDON_PREFIX
+                )
+            end
 
             PetBattleUI_RestorePosition(
                 PetBattleUI_CoinFrame
@@ -753,32 +749,6 @@ eventFrame:SetScript(
 
             if PetBattleUI_Team_Skin then
                 PetBattleUI_Team_Skin()
-            end
-
-
-            -- Ocultar Gossip SOLO si es un menu de PetBattle
-            -- (expectingGossip fue puesto a true por el mensaje
-            -- addon "GOSSIPFLAG" enviado por el servidor justo
-            -- antes de este SendGossipMenu). Cualquier otro NPC
-            -- u objeto con gossip normal no se ve afectado.
-
-            if GossipFrame then
-
-                GossipFrame:HookScript(
-                    "OnShow",
-                    function(self)
-
-                        if PetBattleUI.expectingGossip then
-
-                            self:Hide()
-
-                            PetBattleUI.expectingGossip = false
-
-                        end
-
-                    end
-                )
-
             end
 
 
