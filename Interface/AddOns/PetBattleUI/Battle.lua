@@ -1354,6 +1354,26 @@ end
 -- INICIALIZAR BATALLA
 -- ============================================================
 
+-- ============================================================
+-- HP text to health bars (12300/12300)
+-- ============================================================
+
+local function PetBattleUI_Battle_SetHealthText(fontString, hp, hpMax)
+
+    if not fontString then
+        return
+    end
+
+    hp = math.floor(tonumber(hp) or 0)
+    hpMax = math.floor(tonumber(hpMax) or 0)
+
+    fontString:SetText(
+        hp .. "/" .. hpMax
+    )
+
+end
+
+
 function PetBattleUI_Battle_Init(
     enemyName,
     enemyType,
@@ -1404,6 +1424,12 @@ function PetBattleUI_Battle_Init(
             PetBattleUI_EnemyHealthBar
         )
 
+        PetBattleUI_Battle_SetHealthText(
+            PetBattleUI_EnemyHealthText,
+            enemyHP,
+            enemyHPMax
+        )
+
     end
 
 
@@ -1439,6 +1465,12 @@ function PetBattleUI_Battle_Init(
 
         PetBattleUI_MyHealthBar:SetValue(
             tonumber(myHP) or 100
+        )
+
+        PetBattleUI_Battle_SetHealthText(
+            PetBattleUI_MyHealthText,
+            myHP,
+            myHPMax
         )
 
     end
@@ -1641,6 +1673,7 @@ function PetBattleUI_Battle_UpdateHP(
 )
 
     local bar
+    local text
 
 
     if side == "enemy" then
@@ -1648,10 +1681,16 @@ function PetBattleUI_Battle_UpdateHP(
         bar =
             PetBattleUI_EnemyHealthBar
 
+        text =
+            PetBattleUI_EnemyHealthText
+
     else
 
         bar =
             PetBattleUI_MyHealthBar
+
+        text =
+            PetBattleUI_MyHealthText
 
     end
 
@@ -1683,6 +1722,12 @@ function PetBattleUI_Battle_UpdateHP(
         )
 
     end
+
+    PetBattleUI_Battle_SetHealthText(
+        text,
+        hp,
+        hpMax or select(2, bar:GetMinMaxValues())
+    )
 
 end
 

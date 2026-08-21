@@ -200,6 +200,22 @@
                 </Texture>
 
               </Layer>
+
+              <Layer level="OVERLAY">
+
+                <FontString
+                  name="PetBattleUI_EnemyHealthText"
+                  inherits="TextStatusBarText"
+                  justifyH="CENTER"
+                  text=""
+                >
+                  <Anchors>
+                    <Anchor point="CENTER" x="0" y="0"/>
+                  </Anchors>
+                </FontString>
+
+              </Layer>
+
             </Layers>
 
             <Scripts>
@@ -233,6 +249,21 @@
                 <Texture setAllPoints="true">
                   <Color r="0.1" g="0.1" b="0.1" a="0.6"/>
                 </Texture>
+              </Layer>
+
+              <Layer level="OVERLAY">
+
+                <FontString
+                  name="PetBattleUI_MyHealthText"
+                  inherits="TextStatusBarText"
+                  justifyH="CENTER"
+                  text=""
+                >
+                  <Anchors>
+                    <Anchor point="CENTER" x="0" y="0"/>
+                  </Anchors>
+                </FontString>
+
               </Layer>
             </Layers>
 
